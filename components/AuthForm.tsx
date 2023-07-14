@@ -45,9 +45,7 @@ export default function AuthForm() {
     return (
         <div className="flex flex-col items-center justify-center mt-10">
             <div className="flex items-center gap-2">
-                <p className="text-lg font-semibold text-zinc-700">
-                    Let's talk with GPT!
-                </p>
+                <p className="text-lg font-semibold text-zinc-700">Talk with GPT!</p>
                 <Bot className="h-5 w-5 text-zinc-700" />
             </div>
 
