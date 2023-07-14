@@ -32,8 +32,8 @@ export default function MessageChannel() {
     if (!session?.id) return <AuthForm />;
 
     return (
-        <div className="relative h-full">
-            <div className="fixed top-0 z-10 rounded-tr-lg rounded-tl-lg w-full bg-slate-200 space-y-1 py-2 px-4">
+        <div className="relative h-full w-full">
+            <div className="fixed top-0 z-10 rounded-tr-lg rounded-tl-lg w-fit sm:w-full bg-slate-200 space-y-1 py-2 px-4">
                 <h2 className="font-medium ">
                     Session: <span className="text-sm ">{session.id}</span>
                 </h2>

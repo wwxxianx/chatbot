@@ -44,7 +44,7 @@ export default function MessageInput() {
 
     return (
         <form
-            className="fixed bottom-0 z-10 bg-white flex items-center w-full h-fit border-t-[1px] border-slate-200"
+            className="fixed bottom-0 z-10 bg-white flex items-center w-[90%] sm:w-full h-fit border-t-[1px] border-slate-200"
             onSubmit={handleSubmit}
         >
             {isLoading && <LoadingAnimation className="absolute top-[-20px] left-2"/>}
