@@ -19,7 +19,7 @@ export default function Home() {
                     <MoveDownRight />
                 </div>
             </div>
-            <div className="fixed bottom-[200px] right-[50px] md:top-auto md:bottom-[100px] sm:right-[150px]">
+            <div className="fixed bottom-[70px] right-[50px] md:top-auto md:bottom-[100px] sm:right-[150px]">
                 <Popover>
                     <PopoverTrigger asChild>
                         <ChatButton />
