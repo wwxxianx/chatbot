@@ -9,33 +9,40 @@ import MessageInput from "./MessageInput";
 import { MESSAGE_QUERY_KEY } from "@/app/config";
 import { AlertCircle } from "lucide-react";
 import { Button } from "./ui/Button";
-import useSession from "@/hooks/useSession";
 import { useToast } from "./ui/use-toast";
 
-export default function MessageChannel() {
-    const  { toast } = useToast();
-    const { session, resetSession } = useSession();
+interface MessageChannelProps {
+    sessionId: string | undefined;
+    resetSession: () => void;
+    sessionIsExpired?: boolean
+}
+
+export default function MessageChannel({ sessionId, resetSession, sessionIsExpired }: MessageChannelProps) {
+    const { toast } = useToast();
 
     const { data, isLoading } = useQuery({
         queryKey: MESSAGE_QUERY_KEY,
         queryFn: async () => {
             try {
-                const { data } = await axios.get(`/api/session/${session?.id}`);
+                const { data } = await axios.get(`/api/session/${sessionId}`);
                 return data as ExtendedSession;
             } catch (error) {
-                toast({ description: "Something went wrong", variant: "destructive"})
+                toast({
+                    description: "Something went wrong",
+                    variant: "destructive",
+                });
             }
         },
-        enabled: !!session?.id,
+        enabled: !!sessionId,
     });
 
-    if (!session?.id) return <AuthForm />;
+    if (!sessionId) return <AuthForm />;
 
     return (
         <div className="relative h-full w-full">
             <div className="fixed top-0 z-10 rounded-tr-lg rounded-tl-lg w-fit sm:w-full bg-slate-200 space-y-1 py-2 px-4">
                 <h2 className="font-medium ">
-                    Session: <span className="text-sm ">{session.id}</span>
+                    Session: <span className="text-sm ">{sessionId}</span>
                 </h2>
                 <div className="flex gap-1 items-center">
                     <AlertCircle className="h-4 w-4 text-zinc-500" />
@@ -49,9 +56,11 @@ export default function MessageChannel() {
                 <MessageList messages={data?.messages} />
             )}
 
-            {session.isExpired ? (
+            {sessionIsExpired ? (
                 <div className="fixed z-20 top-[200px] flex flex-col items-center justify-center w-full bg-slate-200/50 py-4">
-                    <p className="font-bold text-zinc-900">The previous session has expired.</p>
+                    <p className="font-bold text-zinc-900">
+                        The previous session has expired.
+                    </p>
                     <Button onClick={() => resetSession()}>
                         Start new sesion
                     </Button>
