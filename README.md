@@ -22,7 +22,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - Prisma
 - Zod
 - Tanstack Query
-- 
+
 ### Purpose: For Interview Test Assessment
 
 
