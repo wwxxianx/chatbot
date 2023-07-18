@@ -1,6 +1,7 @@
 "use client";
 
 import MessageChannel from "@/components/MessageChannel";
+import SearchBar from "@/components/SearchBar";
 import { Button } from "@/components/ui/Button";
 import {
     Popover,
@@ -8,13 +9,38 @@ import {
     PopoverTrigger,
 } from "@/components/ui/Popover";
 import useSession from "@/hooks/useSession";
+import { db } from "@/lib/db";
+import axios from "axios";
 import { MessagesSquare, MoveDownRight } from "lucide-react";
+
 
 export default function Home() {
     const { session, resetSession } = useSession();
 
+    async function createFlight() {
+        try {
+            const { data } = await axios.post("/api/flight");
+
+            // const data = await db.flight.create({
+            //     data: {
+            //         airline: "ABC Airlines",
+            //         arrivalDateTime: departureAt,
+            //         departureDateTime: arrivalAt,
+            //         duration: "8h 30m",
+            //         seatAvailability: 180,
+                                       
+            //     }
+            // })
+            
+            console.log('created: ', data);
+            
+        } catch (error) {
+            
+        }
+    }
+
     return (
-        <main className="relative min-h-screen flex justify-center">
+        <main className="relative min-h-screen">
             <div className="mt-[100px] md:mt-[200px]">
                 <h1 className="text-zinc-800 font-bold text-3xl text-center">
                     Happy Chat with GPT AI
@@ -25,6 +51,9 @@ export default function Home() {
                     <MoveDownRight />
                 </div>
             </div>
+            
+            <SearchBar />
+
             <div className="fixed bottom-[70px] right-[50px] md:top-auto md:bottom-[100px] sm:right-[150px]">
                 <Popover>
                     <PopoverTrigger asChild>

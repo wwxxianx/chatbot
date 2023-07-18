@@ -28,6 +28,39 @@ model Message {
   sessionId String   @db.ObjectId
 }
 
+model Flight {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  departure         Location  @relation("Departure", fields: [departureId], references: [id])
+  destination       Location  @relation("Destination", fields: [destinationId], references: [id])
+  departureDateTime DateTime
+  arrivalDateTime   DateTime
+  airline           String
+  flightNumber      String    @default(cuid())
+  duration          String
+  seatAvailability  Int
+  departureId       String    @db.ObjectId
+  destinationId     String    @db.ObjectId
+  booking           Booking[]
+}
+
+model Location {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  country            String
+  iataCode           String
+  airport            String
+  departureFlights   Flight[] @relation("Departure")
+  destinationFlights Flight[] @relation("Destination")
+}
+
+model Booking {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userName  String
+  userEmail String
+  createdAt DateTime @default(now())
+  flight    Flight   @relation(fields: [flightId], references: [id])
+  flightId  String   @db.ObjectId
+}
+
 enum Role {
   user
   assistant
