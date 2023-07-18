@@ -99,7 +99,7 @@ export default function SearchBooking() {
                 <ul className="bg-white max-w-xl mx-auto shadow-xl rounded-lg divide-y-[1px] ">
                     {queryResults?.map((booking) => {
                         return (
-                            <div>
+                            <div key={booking.id}>
                                 <BookingDialog booking={booking} />
                                 <DeleteBookingDialog booking={booking}/>
                             </div>

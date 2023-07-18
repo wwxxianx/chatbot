@@ -104,7 +104,7 @@ export default function SearchBar() {
             {(queryResults?.length ?? 0) > 0 && (
                 <ul className="bg-white max-w-xl mx-auto shadow-xl rounded-lg divide-y-[1px] ">
                     {queryResults?.map((flight) => {
-                        return <FlightDialog flight={flight} />;
+                        return <FlightDialog key={flight.id} flight={flight} />;
                     })}
                 </ul>
             )}
