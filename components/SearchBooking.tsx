@@ -101,7 +101,7 @@ export default function SearchBooking() {
                         return (
                             <div key={booking.id}>
                                 <BookingDialog booking={booking} />
-                                <DeleteBookingDialog booking={booking}/>
+                                <DeleteBookingDialog booking={booking} debounceRequest={debounceRequest}/>
                             </div>
                         );
                     })}
@@ -111,17 +111,19 @@ export default function SearchBooking() {
     );
 }
 
-function DeleteBookingDialog({ booking }: { booking: ExtendedBooking }) {
+function DeleteBookingDialog({ booking, debounceRequest }: { booking: ExtendedBooking, debounceRequest: () => void }) {
 
     const { mutate: handleDeleteBooking } = useMutation({
         mutationFn: async () => {
             const { data } = await axios.delete(`/api/booking/${booking.id}`);
         },
-        onSuccess: (data) =>
-            toast({
+        onSuccess: (data) => {
+            debounceRequest();
+            return toast({
                 title: "Flight ticket cancelled",
                 description: `Your flight ticket ${booking.id} has been cancelled`,
-            }),
+            })
+        }
     });
 
     return (
